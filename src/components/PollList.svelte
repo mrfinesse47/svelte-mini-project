@@ -6,7 +6,8 @@
 <div class="poll-list">
   {#each polls as poll (poll.id)}
     <div>
-      <PollDetails {poll} />
+      <PollDetails {poll} on:vote />
+      if you dont assign a handler its forwarded to the parent
     </div>
   {/each}
 </div>
