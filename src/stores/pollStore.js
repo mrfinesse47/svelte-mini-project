@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-const pollStore = writable([
+const PollStore = writable([
   {
     id: 1,
     question: "python or JS",
@@ -19,4 +19,4 @@ const pollStore = writable([
   },
 ]);
 
-export default pollStore;
+export default PollStore;

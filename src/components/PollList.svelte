@@ -1,15 +1,27 @@
 <script>
   import PollDetails from "./PollDetails.svelte";
-  import pollStore from "../stores/pollStore";
-  export let polls = []; //the default
+  import PollStore from "../stores/PollStore";
+  //import { onDestroy, onMount } from "svelte";
 
-  pollStore.subscribe((data) => {
-    polls = data;
-  });
+  //   export let polls = []; //the default
+
+  //   const unSub = pollStore.subscribe((data) => {
+  //     polls = data;
+  //   });
+
+  //   //   onMount(() => {
+  //   //     //get data here usually
+  //   //   });
+
+  //   onDestroy(() => {
+  //     console.log("comp destroyed");
+  //     unSub(); //prevents memory leak
+  //   });
 </script>
 
 <div class="poll-list">
-  {#each polls as poll (poll.id)}
+  {#each $PollStore as poll (poll.id)}
+    <!-- using the $ sign you need not sub/unsub -->
     <div>
       <PollDetails {poll} on:vote />
       if you dont assign a handler its forwarded to the parent
