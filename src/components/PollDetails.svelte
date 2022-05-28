@@ -3,12 +3,25 @@
   import Card from "../shared/Card.svelte";
   import PollStore from "../stores/PollStore";
   import Button from "../shared/Button.svelte";
+  import { tweened } from "svelte/motion";
   // import { createEventDispatcher } from "svelte";
   // const dispatch = createEventDispatcher();
   //reactive  values
   $: totalVotes = poll.votesA + poll.votesB;
-  $: percentA = Math.floor((100 / totalVotes) * poll.votesA);
-  $: percentB = Math.floor((100 / totalVotes) * poll.votesB);
+  $: percentA = Math.floor((100 / totalVotes) * poll.votesA) || 0;
+  $: percentB = Math.floor((100 / totalVotes) * poll.votesB) || 0;
+
+  //tweened %
+
+  const tweenedA = tweened(0);
+  const tweenedB = tweened(0);
+
+  $: tweenedA.set(percentA);
+  $: tweenedB.set(percentB);
+
+  $: console.log($tweenedA);
+  //tweened works like a store so you dont need to subscribe but you can use the $ sign shortcut
+
   //handling vote
   const handleVote = (option, id) => {
     //dispatch("vote", { option, id });
@@ -42,7 +55,7 @@
         handleVote("A", poll.id);
       }}
     >
-      <div class="percent percent-a" style="width:{percentA}%" />
+      <div class="percent percent-a" style="width:{$tweenedA}%" />
       <span>{poll.answerA} ({poll.votesA})</span>
     </div>
     <div
@@ -51,7 +64,7 @@
         handleVote("B", poll.id);
       }}
     >
-      <div class="percent percent-b" style="width:{percentB}%" />
+      <div class="percent percent-b" style="width:{$tweenedB}%" />
       <span>{poll.answerB} ({poll.votesB})</span>
     </div>
     <div class="delete">
