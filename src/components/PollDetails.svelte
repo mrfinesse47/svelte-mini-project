@@ -2,6 +2,7 @@
   export let poll;
   import Card from "../shared/Card.svelte";
   import PollStore from "../stores/PollStore";
+  import Button from "../shared/Button.svelte";
   // import { createEventDispatcher } from "svelte";
   // const dispatch = createEventDispatcher();
   //reactive  values
@@ -19,6 +20,14 @@
       copiedPolls[upvotedPollIndex][`votes${option}`]++;
 
       return copiedPolls;
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("deleting");
+    PollStore.update((currentPolls) => {
+      let copiedPolls = [...currentPolls];
+      return copiedPolls.filter((poll) => poll.id !== id);
     });
   };
 </script>
@@ -44,6 +53,21 @@
     >
       <div class="percent percent-b" style="width:{percentB}%" />
       <span>{poll.answerB} ({poll.votesB})</span>
+    </div>
+    <div class="delete">
+      <!-- <Button
+        on:click={() => {
+          console.log("hi");
+          //handleDelete(poll.id);
+        }}
+        >Delete
+      </Button> -->
+
+      <Button
+        on:click={() => {
+          handleDelete(poll.id);
+        }}>Delete</Button
+      >
     </div>
   </div>
 </Card>
@@ -84,5 +108,9 @@
   .percent-b {
     border-left: 4px solid rgba(69, 196, 150, 0.2);
     background: rgba(69, 196, 150, 0.2);
+  }
+  .delete {
+    margin-top: 30px;
+    text-align: center;
   }
 </style>

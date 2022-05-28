@@ -24,7 +24,6 @@
     <!-- using the $ sign you need not sub/unsub -->
     <div>
       <PollDetails {poll} />
-      <!-- if you dont assign a handler its forwarded to the parent -->
     </div>
   {/each}
 </div>
